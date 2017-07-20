@@ -8,6 +8,7 @@ use Google\AdsApi\AdWords\v201705\cm\NetworkSetting;
 use Google\AdsApi\AdWords\v201705\cm\Paging;
 use Google\AdsApi\AdWords\v201705\cm\RateExceededError;
 use Google\AdsApi\AdWords\v201705\o\LocationSearchParameter;
+use Google\AdsApi\AdWords\v201705\o\MonthlySearchVolume;
 use Google\AdsApi\AdWords\v201705\o\NetworkSearchParameter;
 use Google\AdsApi\AdWords\v201705\o\RelatedToQuerySearchParameter;
 use Google\AdsApi\AdWords\v201705\o\TargetingIdeaSelector;
@@ -120,7 +121,7 @@ final class TargetingIdeaService extends AdWordsService
         return new TargetingIdeaSelector($searchParameters,
             'KEYWORD',
             'STATS',
-            ['SEARCH_VOLUME', 'KEYWORD_TEXT', 'AVERAGE_CPC', 'COMPETITION'],
+            ['SEARCH_VOLUME', 'KEYWORD_TEXT', 'AVERAGE_CPC', 'COMPETITION', 'TARGETED_MONTHLY_SEARCHES'],
             new Paging(0, self::PAGE_LIMIT)
         );
     }
@@ -131,8 +132,13 @@ final class TargetingIdeaService extends AdWordsService
      */
     private function mapResult(array $data)
     {
+        $average = array_average(function(MonthlySearchVolume $volume) {
+            return $volume->getCount();
+        }, $data['TARGETED_MONTHLY_SEARCHES']->getValue() ?: []);
+
         return [
             'volume'        => $data['SEARCH_VOLUME']->getValue() ?: 0,
+            'average'       => $average,
             'average_cpc'   => ($data['AVERAGE_CPC']->getValue() ? $data['AVERAGE_CPC']->getValue()->getMicroAmount() : 0) / 1000000,
             'competition'   => $data['COMPETITION']->getValue() ?: 0,
         ];
