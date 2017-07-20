@@ -47,6 +47,7 @@ abstract class AdWordsService
                     ->fromFile($configFile)
                     ->build()
             )
+            ->withSoapLogger(new EmptyLogger)
             ->build();
 
         $this->service = (new AdwordsServices())->get($session, $this->serviceClass);
