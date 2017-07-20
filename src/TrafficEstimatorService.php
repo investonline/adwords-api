@@ -113,7 +113,7 @@ final class TrafficEstimatorService extends AdWordsService
     private function mapToKeywordEstimateRequests(array $keywords)
     {
         return array_map(function($keyword) {
-            return new KeywordEstimateRequest(null, new Keyword(null, null, null, $keyword, 'EXACT'));
+            return new KeywordEstimateRequest(null, new Keyword(null, null, null, $keyword, 'PHRASE'));
         }, $keywords);
     }
 
