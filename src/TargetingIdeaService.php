@@ -78,6 +78,10 @@ final class TargetingIdeaService extends AdWordsService
 
             $page = $this->service->get($selector);
 
+            if ($page->getEntries() === null) {
+                return [];
+            }
+
             foreach ($page->getEntries() as $entry) {
                 $data = MapEntries::toAssociativeArray($entry->getData());
                 $results[$data['KEYWORD_TEXT']->getValue()] = $this->mapResult($data);
