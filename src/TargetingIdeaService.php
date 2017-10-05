@@ -79,7 +79,13 @@ final class TargetingIdeaService extends AdWordsService
             $page = $this->service->get($selector);
 
             if ($page->getEntries() === null) {
-                return [];
+                $empty = [];
+
+                foreach($selector->getSearchParameters()[0]->getQueries() as $keyword) {
+                    $empty[$keyword] = $this->getEmptyResult();
+                }
+
+                return $empty;
             }
 
             foreach ($page->getEntries() as $entry) {
@@ -145,6 +151,19 @@ final class TargetingIdeaService extends AdWordsService
             'average'       => $average,
             'average_cpc'   => ($data['AVERAGE_CPC']->getValue() ? $data['AVERAGE_CPC']->getValue()->getMicroAmount() : 0) / 1000000,
             'competition'   => $data['COMPETITION']->getValue() ?: 0,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getEmptyResult()
+    {
+        return [
+            'volume'        => 0,
+            'average'       => 0,
+            'average_cpc'   => 0,
+            'competition'   => 0,
         ];
     }
 
