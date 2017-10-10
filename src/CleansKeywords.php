@@ -19,7 +19,7 @@ trait CleansKeywords
                 $keyword
             );
 
-            $keyword = str_replace("\xc2\xa0", "", $keyword);   // Remove non-breaking spaces
+            $keyword = trim($keyword, "\xc2\xa0");
             $keyword = trim($keyword);                          // Trim the keyword
 
             return $keyword;
