@@ -1,9 +1,11 @@
 <?php
 
 namespace InvestOnlineAdWordsApi;
+use Google\AdsApi\AdWords\v201705\cm\ApiException;
 use Google\AdsApi\AdWords\v201705\cm\Keyword;
 use Google\AdsApi\AdWords\v201705\cm\Location;
 use Google\AdsApi\AdWords\v201705\cm\Money;
+use Google\AdsApi\AdWords\v201705\cm\RateExceededError;
 use Google\AdsApi\AdWords\v201705\o\AdGroupEstimateRequest;
 use Google\AdsApi\AdWords\v201705\o\CampaignEstimateRequest;
 use Google\AdsApi\AdWords\v201705\o\KeywordEstimate;
@@ -49,6 +51,7 @@ final class TrafficEstimatorService extends AdWordsService
      * @param array $keywords
      * @param null $country
      * @return array
+     * @throws ApiException
      */
     public function get(array $keywords, $country = null)
     {
@@ -62,21 +65,35 @@ final class TrafficEstimatorService extends AdWordsService
             $criteria[] = new Location($country);
         }
 
-        $result = $this->service->get(new TrafficEstimatorSelector([
-            new CampaignEstimateRequest(null, null, [
-                new AdGroupEstimateRequest(null, null, $keywordEstimateRequests, new Money(null, 100 * 1000000))
-            ], $criteria)
-        ], false));
+        try {
 
-        $keywordEstimates = $this->getKeywordEstimatesFromResult($result);
+            $result = $this->service->get(new TrafficEstimatorSelector([
+                new CampaignEstimateRequest(null, null, [
+                    new AdGroupEstimateRequest(null, null, $keywordEstimateRequests, new Money(null, 100 * 1000000))
+                ], $criteria)
+            ], false));
 
-        if (count($keywordEstimates) !== count($keywords)) {
-            throw new KeywordEstimateCountDoesNotMatchException;
+            $keywordEstimates = $this->getKeywordEstimatesFromResult($result);
+
+            if (count($keywordEstimates) !== count($keywords)) {
+                throw new KeywordEstimateCountDoesNotMatchException;
+            }
+
+            return array_combine($keywords, array_map(function (KeywordEstimate $keywordEstimate) {
+                return (int)($keywordEstimate->getMax()->getImpressionsPerDay() * 30);
+            }, $keywordEstimates));
+
+        } catch (ApiException $e) {
+            $error = $e->getErrors()[0];
+
+            if (!$error instanceof RateExceededError) {
+                throw $e;
+            }
+
+            sleep($error->getRetryAfterSeconds());
+
+            return $this->get($keywords, $country);
         }
-
-        return array_combine($keywords, array_map(function(KeywordEstimate $keywordEstimate) {
-            return (int) ($keywordEstimate->getMax()->getImpressionsPerDay() * 30);
-        }, $keywordEstimates));
     }
 
     /**
