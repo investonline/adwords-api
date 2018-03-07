@@ -2,16 +2,16 @@
 
 namespace InvestOnlineAdWordsApi;
 
-use Google\AdsApi\AdWords\v201705\cm\ApiException;
-use Google\AdsApi\AdWords\v201705\cm\Location;
-use Google\AdsApi\AdWords\v201705\cm\NetworkSetting;
-use Google\AdsApi\AdWords\v201705\cm\Paging;
-use Google\AdsApi\AdWords\v201705\cm\RateExceededError;
-use Google\AdsApi\AdWords\v201705\o\LocationSearchParameter;
-use Google\AdsApi\AdWords\v201705\o\MonthlySearchVolume;
-use Google\AdsApi\AdWords\v201705\o\NetworkSearchParameter;
-use Google\AdsApi\AdWords\v201705\o\RelatedToQuerySearchParameter;
-use Google\AdsApi\AdWords\v201705\o\TargetingIdeaSelector;
+use Google\AdsApi\AdWords\v201802\cm\ApiException;
+use Google\AdsApi\AdWords\v201802\cm\Location;
+use Google\AdsApi\AdWords\v201802\cm\NetworkSetting;
+use Google\AdsApi\AdWords\v201802\cm\Paging;
+use Google\AdsApi\AdWords\v201802\cm\RateExceededError;
+use Google\AdsApi\AdWords\v201802\o\LocationSearchParameter;
+use Google\AdsApi\AdWords\v201802\o\MonthlySearchVolume;
+use Google\AdsApi\AdWords\v201802\o\NetworkSearchParameter;
+use Google\AdsApi\AdWords\v201802\o\RelatedToQuerySearchParameter;
+use Google\AdsApi\AdWords\v201802\o\TargetingIdeaSelector;
 use Google\AdsApi\Common\Util\MapEntries;
 use InvestOnlineAdWordsApi\Exceptions\TooManyKeywordsException;
 
@@ -38,10 +38,10 @@ final class TargetingIdeaService extends AdWordsService
      * The AdWords Api Client Service class
      * @var string $serviceClass
      */
-    protected $serviceClass = \Google\AdsApi\AdWords\v201705\o\TargetingIdeaService::class;
+    protected $serviceClass = \Google\AdsApi\AdWords\v201802\o\TargetingIdeaService::class;
 
     /**
-     * @var \Google\AdsApi\AdWords\v201705\o\TargetingIdeaService $service
+     * @var \Google\AdsApi\AdWords\v201802\o\TargetingIdeaService $service
      */
     protected $service;
 

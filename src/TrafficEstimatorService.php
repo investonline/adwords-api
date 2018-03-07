@@ -1,17 +1,17 @@
 <?php
 
 namespace InvestOnlineAdWordsApi;
-use Google\AdsApi\AdWords\v201705\cm\ApiException;
-use Google\AdsApi\AdWords\v201705\cm\Keyword;
-use Google\AdsApi\AdWords\v201705\cm\Location;
-use Google\AdsApi\AdWords\v201705\cm\Money;
-use Google\AdsApi\AdWords\v201705\cm\RateExceededError;
-use Google\AdsApi\AdWords\v201705\o\AdGroupEstimateRequest;
-use Google\AdsApi\AdWords\v201705\o\CampaignEstimateRequest;
-use Google\AdsApi\AdWords\v201705\o\KeywordEstimate;
-use Google\AdsApi\AdWords\v201705\o\KeywordEstimateRequest;
-use Google\AdsApi\AdWords\v201705\o\TrafficEstimatorResult;
-use Google\AdsApi\AdWords\v201705\o\TrafficEstimatorSelector;
+use Google\AdsApi\AdWords\v201802\cm\ApiException;
+use Google\AdsApi\AdWords\v201802\cm\Keyword;
+use Google\AdsApi\AdWords\v201802\cm\Location;
+use Google\AdsApi\AdWords\v201802\cm\Money;
+use Google\AdsApi\AdWords\v201802\cm\RateExceededError;
+use Google\AdsApi\AdWords\v201802\o\AdGroupEstimateRequest;
+use Google\AdsApi\AdWords\v201802\o\CampaignEstimateRequest;
+use Google\AdsApi\AdWords\v201802\o\KeywordEstimate;
+use Google\AdsApi\AdWords\v201802\o\KeywordEstimateRequest;
+use Google\AdsApi\AdWords\v201802\o\TrafficEstimatorResult;
+use Google\AdsApi\AdWords\v201802\o\TrafficEstimatorSelector;
 use InvestOnlineAdWordsApi\Exceptions\KeywordEstimateCountDoesNotMatchException;
 use InvestOnlineAdWordsApi\Exceptions\NoAdGroupEstimatesException;
 use InvestOnlineAdWordsApi\Exceptions\NoCampaignEstimatesException;
@@ -40,10 +40,10 @@ final class TrafficEstimatorService extends AdWordsService
      * The AdWords Api Client Service class
      * @var string $serviceClass
      */
-    protected $serviceClass = \Google\AdsApi\AdWords\v201705\o\TrafficEstimatorService::class;
+    protected $serviceClass = \Google\AdsApi\AdWords\v201802\o\TrafficEstimatorService::class;
 
     /**
-     * @var \Google\AdsApi\AdWords\v201705\o\TrafficEstimatorService $service
+     * @var \Google\AdsApi\AdWords\v201802\o\TrafficEstimatorService $service
      */
     protected $service;
 
