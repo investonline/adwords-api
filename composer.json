@@ -1,24 +1,25 @@
 {
-    "name": "investonline/adwords-api",
-    "description": "Wrapper around the TargetingIdeaService and TrafficEstimatorService",
-    "type": "library",
-    "require": {
-        "googleads/googleads-php-lib": "^33.0"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Peter Verboom",
-            "email": "p.verboom@invest-online.nl"
-        }
-    ],
-    "minimum-stability": "stable",
-    "autoload": {
-        "psr-4": {
-            "InvestOnlineAdWordsApi\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+  "name": "investonline/adwords-api",
+  "description": "Wrapper around the TargetingIdeaService and TrafficEstimatorService",
+  "type": "library",
+  "require": {
+    "googleads/googleads-php-lib": "^39.0",
+    "ext-iconv": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peter Verboom",
+      "email": "p.verboom@invest-online.nl"
     }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "InvestOnlineAdWordsApi\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  }
 }
